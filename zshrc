@@ -1,5 +1,7 @@
-# NOTE: Much of this config comes from:
+# NOTE: Much of this config and my oh-my-zsh config comes from:
 #    http://stevelosh.com/blog/2010/02/my-extravagant-zsh-prompt/
+#    So all due credit goes to the author of that blog
+
 # Set zsh theme
 ZSH_THEME="agnoster"
 
