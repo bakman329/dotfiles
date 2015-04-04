@@ -1,0 +1,6 @@
+splitw -h -p 45 
+selectp -t 1 
+clock-mode
+splitw -v -p 75 -c ~/dev/python/ 'ipython'
+selectp -t 2
+selectp -t 0 
