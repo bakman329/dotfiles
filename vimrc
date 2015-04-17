@@ -21,8 +21,8 @@ set laststatus=2               " Always show a status line
 set encoding=utf-8             " Default character encoding
 set autochdir                  " Auto-cd to current files directory
 set hidden
-set ttimeout " Set escape sequence timeout to 100ms
-set ttimeoutlen=100
+" set ttimeout " Set escape sequence timeout to 100ms
+" set ttimeoutlen=100
 set nu
 set listchars=tab:>-,trail:· " highlight tabs and trailing spaces
 set list
@@ -69,6 +69,8 @@ call vundle#begin()               " Init Vundle
     Plugin 'tomtom/tlib_vim'
     Plugin 'garbas/vim-snipmate'
     " Plugin 'Valloric/YouCompleteMe'
+    Plugin 'othree/html5.vim'
+    Plugin 'scrooloose/nerdcommenter'
 call vundle#end()                 " Close Vundle config
 filetype plugin indent on
 
@@ -90,6 +92,9 @@ let NERDTreeShowHidden=1
 let NERDTreeHighlightCursorline=1
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType")
             \&& b:NERDTreeType == "primary") | q | endif
+
+" NERDCommenter
+let NERDSpaceDelims=1
 
 " DelimitMate
 let delimitMate_expand_cr=1
@@ -120,7 +125,9 @@ let g:airline_symbols.whitespace = 'Ξ'
 let g:airline#extensions#tabline#enabled = 1
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+" let g:ycm_global_ycm_extra_conf = "~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py"
+let g:syntastic_html_tidy_exec = 'tidy5'
+
 
 " ================ Remapping =========================
 " Swap : and ;

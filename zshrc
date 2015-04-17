@@ -4,9 +4,9 @@
 
 # Set zsh theme
 ZSH_THEME="agnoster"
-
 # To simplify prompt
-export DEFAULT_USER=$USER
+export DEFAULT_USER=$(id -un)
+
 source $HOME/.profile
 
 # Path to oh-my-zsh installation.
@@ -16,7 +16,9 @@ source $ZSH/oh-my-zsh.sh
 # Specify plugins
 # osx: Various helpful aliases for OSX
 # git: Git integration
-plugins=(git osx)
+# brew: Brew aliases and completion
+# common-aliases: Several useful aliases
+plugins=(git osx brew common-aliases)
 
 # Set emacs keybinds
 bindkey -e
@@ -38,4 +40,5 @@ esac
 
 export EDITOR='vim'
 
-source $HOME/.bin/name.zsh && name
+source ~/.bin/name.zsh && name
+source ~/.bin/aliases.zsh

@@ -1,6 +1,3 @@
-# Variables
-MC_SERVERS=$HOME/mcServers/Spigot/
-
 # Easily run ls in long form
 alias l='ls -l'
 
@@ -36,7 +33,7 @@ function server() {
     fi
 
     PDIR=$(pwd)
-    cd $MC_SERVERS
+    cd $HOME/mcServers/Spigot/
     case $1 in
         "1.8.3")
             cd 1.8.3/
