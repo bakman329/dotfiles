@@ -31,6 +31,16 @@ bash
 git clone git://github.com/bakman329/dotfiles ~/dotfiles
 cd ~/dotfiles
 ./makesymlinks.sh
+git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+```
+This code will clone this repository to a new directory in your home directory, create symbolic links from this new directory to your home directory, then clone the Vundle plugin for vim, which is used to install vim plugins.
+
+Notes
+-----
+The Oh-My-ZSH prompt that I have set to default, along with my vim setup will not be displayed correctly without a correctly patched font. These fonts can be found at https://github.com/powerline/fonts.
+###running makesymlinks.sh will set your default shell to ZSH. To revert this change, run:
+```
+sudo chsh -s "$(command -v zsh)" "${USER}"
 ```
 
 Credit
