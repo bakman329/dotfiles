@@ -40,8 +40,9 @@ Notes
 The Oh-My-ZSH prompt that I have set to default, along with my vim setup will not be displayed correctly without a correctly patched font. These fonts can be found at https://github.com/powerline/fonts.
 ###running makesymlinks.sh will set your default shell to ZSH. To revert this change, run:
 ```
-sudo chsh -s "$(command -v zsh)" "${USER}"
+sudo chsh -s "$(command -v {shell})" "${USER}"
 ```
+Replacing {shell} with the name of your shell (e.g. bash, sh, csh)
 
 Credit
 ------
