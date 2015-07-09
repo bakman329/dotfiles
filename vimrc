@@ -8,6 +8,10 @@ syntax on          " Enable syntax highlighting
 set t_Co=256       " 256 Colors
 filetype plugin on
 
+" ================ Custom Variable ===================
+let consolecolors="base16-railscasts"
+let guicolors="solarized"
+
 " ================ General Config ====================
 set title                      " Update terminal window title
 set visualbell                 " Turn off sound
@@ -16,19 +20,22 @@ set showcmd                    " Show incomplete commands
 set autoread                   " Reload files changed outside of vim
 set ttyfast                    " Use a fast terminal connection
 set ruler                      " Show row and column in status bar
+set autochdir                  " Auto-cd to current files directory
+set hidden                     " Hides buffers upon abandonment
+set number                     " Display line numbers on sidebar
+set listchars=tab:>-,trail:·   " Highlight tabs and trailing spaces
+set list
+set guioptions-=r              " Fix GUI
+set guioptions+=R
+set backup                     " Turn on backups
+set backupdir=~/.vim/backup    " Move backups to a specific directory
 set backspace=indent,eol,start " Fix backspace in insert mode
 set laststatus=2               " Always show a status line
 set encoding=utf-8             " Default character encoding
-set autochdir                  " Auto-cd to current files directory
-set hidden
-" set ttimeout " Set escape sequence timeout to 100ms
-" set ttimeoutlen=100
-set nu
-set listchars=tab:>-,trail:· " highlight tabs and trailing spaces
-set list
 
 " ================ Indentation =======================
-set ts=4 sw=4 sts=4 ai et
+" Set indentation defaults
+set tabstop=4 shiftwidth=4 softtabstop=4 autoindent expandtab
 
 " ================ Completion ========================
 set wildmode=list:longest
@@ -47,7 +54,24 @@ set hlsearch   " Highlight searches by default
 " ================ Color Config ======================
 " colorscheme wombat256mod
 set background=dark
-colorscheme solarized
+if has('gui_running')
+    let g:solarized_termcolors=256
+    set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h12
+    execute 'colorscheme' guicolors
+    " set background=light
+else
+    " Use dark solarized for terminal
+    " set background=dark
+
+    " Compatibility for Terminal
+    let g:solarized_termtrans=1
+
+    " Make Solarized use 16 colors for Terminal support
+    let g:solarized_termcolors=16
+
+    execute 'colorscheme' consolecolors
+endif
+
 set cursorline
 
 " ================ Plugins ===========================
@@ -105,7 +129,7 @@ au FileType vim let b:delimitMate_quotes = "\'"
 let g:syntastic_check_on_open=1
 let g:syntastic_auto_jump=1
 let g:syntastic_auto_loc_list=0
-let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler = 'g++'
 let g:syntastic_cpp_compiler_options = ' -std=c++11 -stdlib=libc++'
 
 " Airline

@@ -4,6 +4,9 @@ alias l='ls -l'
 # Format usage
 alias usage='top -stats pid,command,cpu,mem'
 
+# Gui vim
+alias gvim='open -a"Macvim"'
+
 # List most recent files in dir $1
 # If $2 is given, list $2 most recent files
 function atr() {
