@@ -4,6 +4,7 @@ PATH=/usr/local/bin:$PATH
 alias gcc='/usr/local/bin/gcc-5'
 alias g++='/usr/local/bin/g++-5'
 alias clang='/usr/local/bin/clang'
+alias vim='/Applications/MacVim.app/Contents/MacOS/Vim'
 
 # Add GHC 7.8.4 to the PATH, via http://ghcformacosx.github.io/
 export GHC_DOT_APP="/Applications/ghc-7.8.4.app"
