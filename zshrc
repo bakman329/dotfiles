@@ -41,6 +41,4 @@ bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
 bindkey '^r' history-incremental-search-backward
 
-# source ~/.bin/name.zsh && name
 source ~/.bin/name2.zsh && name2
-source ~/.bin/aliases.zsh
