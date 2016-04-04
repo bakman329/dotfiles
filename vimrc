@@ -8,9 +8,6 @@ syntax on          " Enable syntax highlighting
 set t_Co=256       " 256 Colors
 filetype plugin on
 
-" ================ Custom Variable ===================
-let scheme="base16-railscasts"
-
 " ================ General Config ====================
 set title                      " Update terminal window title
 set visualbell                 " Turn off sound
@@ -51,12 +48,11 @@ set incsearch " Find the next match as we type the search
 set hlsearch " Highlight searches by default
 
 " ================ Color/Fonts =======================
-set background=dark
-if has('gui_running')
-    set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h12
-endif
+" if has('gui_running')
+"     set guifont=Meslo\ LG\ S\ Regular\ for\ Powerline:h12
+" endif
 
-execute 'colorscheme' scheme
+colorscheme jellybeans
 
 set cursorline
 
