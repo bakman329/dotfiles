@@ -19,7 +19,7 @@ source $ZSH/oh-my-zsh.sh
 # brew: Brew aliases and completion
 # common-aliases: Several useful aliases
 # zsh-syntax-highlighting: Fish-like highlighting for zsh
-plugins=(git osx brew common-aliases) # zsh-syntax-highlighting)
+plugins=(git osx brew common-aliases)
 
 # Fix escape timeout
 export KEYTIMEOUT=1

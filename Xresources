@@ -1,4 +1,9 @@
-URxvt.font: xft:Source Code Pro for Powerline:size=9:antialias=true
+URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true, \
+            xft:FreeSerif:style=Regular, \
+            xft:unifont:style=Medium:antialias=false
+
+
+urxvt.visualbell: false
 
 ! Jellybeans Terminal Colours
 urxvt.background: #151515
@@ -6,8 +11,7 @@ urxvt.foreground: #ffffff
 ! black
 ! urxvt.color0: #888888
 urxvt.color0: #000000
-urxvt.color8: #000000
-! urxvt.color8: #525252
+urxvt.color8: #525252
 ! red
 urxvt.color1: #cf6a4c
 urxvt.color9: #ff9d80
