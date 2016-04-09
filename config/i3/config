@@ -103,5 +103,6 @@ focus_follows_mouse no
 
 for_window [class="^.*"] border pixel 4
 smart_gaps on
+hide_edge_borders both
 gaps inner 10
 gaps outer 5
