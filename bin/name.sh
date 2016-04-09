@@ -15,7 +15,7 @@ name() {
          $fg[blue] "            @$HOST"
     echo $fg_bold[red] "   / / ___| |__"
     echo $fg_bold[red] "  / / / __| '_ \\" \
-         $fg[blue] "   time:$(date +%l:%M)"
+         $fg[blue] "   time: $(date +%l:%M)"
     echo $fg_bold[red] " / /__\\__ \\ | | |"
     echo $fg_bold[red] "/_____|___/_| |_|"
 }

@@ -43,4 +43,4 @@ bindkey '^r' history-incremental-search-backward
 
 alias xrdb='xrdb ~/.Xresources'
 
-source ~/.bin/name2.zsh && name2
+source ~/.bin/name.sh && name

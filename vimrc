@@ -68,8 +68,7 @@ call vundle#begin() " Init Vundle
     Plugin 'powerline/powerline'
     Plugin 'bling/vim-airline'
     Plugin 'tpope/vim-fugitive'
-    Plugin 'Shougo/neocomplete'
-    Plugin 'Shougo/neosnippet'
+    " Plugin 'Shougo/neocomplete'
 call vundle#end() " Close Vundle config
 filetype plugin indent on
 

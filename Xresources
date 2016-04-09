@@ -1,8 +1,8 @@
-URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=13:antialias=true:hinting=true, \
+URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=11:antialias=true:hinting=true, \
             xft:FreeSerif:style=Regular, \
             xft:unifont:style=Medium:antialias=false
 
-
+urxvt.scrollBar: false
 urxvt.visualbell: false
 
 ! Jellybeans Terminal Colours
