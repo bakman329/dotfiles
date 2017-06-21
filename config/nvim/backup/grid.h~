@@ -1,0 +1,38 @@
+#ifndef GRID_H
+#define GRID_H
+
+#include <vector>
+#include <stdexcept>
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+/*
+ * Wraps a 1D vector as a 2D of length (w*h)
+ * [a b c
+ *  d e f
+ *  g h i]
+ * Becomes
+ * [a b c d e f g h i]
+ */
+class Grid {
+ public:
+    Grid(const int rows, const int cols) : rows(rows), cols(cols) {
+        this->arr = std::vector<int>(rows*cols);
+    }
+    Grid(const Grid &other) : rows(other.rows), cols(other.cols), arr(other.arr) {};
+    int get(const int row, const int col) const;
+    void set(const int row, const int col, const int x);
+    void setAll(const int x);
+    int get_rows() const;
+    int get_cols() const;
+    std::string toString();
+
+ private:
+    const int rows;
+    const int cols;
+    std::vector<int> arr;
+    int *getRef(const int row, const int col);
+};
+
+#endif

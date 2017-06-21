@@ -1,0 +1,45 @@
+import pandas as pd
+import tensorflow as tf
+import numpy as np
+
+reader = tf.WholeFileReader()
+
+def jpeg_tensor(filename):
+    filename_queue = tf.train.string_input_producer([filename])
+    _, value = reader.read(filename_queue)
+    img_decode = tf.image.decode_jpeg(value)
+    init_op = tf.initialize_all_variables()
+    with tf.Session() as sess:
+        sess.run(init_op)
+        image = img_decode.eval()
+
+def fit_classifier(classifier, training_set, training_target, test_set, test_target, steps):
+	classifier.fit(x=training_set, y=training_target, steps=steps)
+	# accuracy_score = classifier.evaluate(x=test_set,
+    #                                  y=test_target)["accuracy"]
+	print(classifier.evaluate(x=test_set,
+                                     y=test_target))#["accuracy"])
+	print(classifier.predict(np.array([7.7, 2.8, 6.7, 2.0], dtype=float)))
+	# print('Accuracy: {0:f}'.format(accuracy_score))
+
+
+train = pd.read_csv('train.csv')
+test = pd.read_csv('test.csv')
+unique = train.species.unique()
+species_enum = dict(zip(unique, np.arange(len(unique))))
+train.species = train.species.apply(species_enum.get).astype(float)
+# train['images'] = [jpeg_tensor('images/' + str(train.id[i]) + '.jpg') for i in range(len(train))]
+test.species = test.species.apply(species_enum.get).astype(float)
+# test['images'] = [jpeg_tensor('images/' + str(test.id[i]) + '.jpg') for i in range(len(test))]
+train.drop('id')
+test.drop('id')
+training_target = train.pop('species')
+training_set = train
+test_target = test.pop('species')
+test_set = test
+
+feature_columns = [tf.contrib.layers.real_valued_column("", dimension=1022)]
+dnn = tf.contrib.learn.DNNClassifier(feature_columns=feature_colums,
+        hidden_units=[10, 20, 10],
+        n_classes=99,
+        model_dir="/tmp/leaf_dnn")

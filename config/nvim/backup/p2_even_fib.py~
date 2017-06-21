@@ -1,0 +1,23 @@
+import time
+start_time = time.time()
+
+known = {0 : 0,
+         1 : 1}
+def fib(n):
+    if known.has_key(n):
+        return known[n]
+    known[n] = fib(n-2) + fib(n-1)
+    return known[n]
+
+total = 0
+f = 0
+i = 0
+while f <= 4000000:
+    i = i + 1
+    f = fib(i)
+    if f % 2 == 0:
+        total += f
+
+print(total)
+
+print("--- %s seconds ---" % (time.time() - start_time))

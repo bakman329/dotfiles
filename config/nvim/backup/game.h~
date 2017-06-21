@@ -1,0 +1,27 @@
+#ifndef GAME_H
+#define GAME_H
+
+#include <vector>
+#include <algorithm>
+#include <string>
+#include "grid.h"
+
+class Game {
+ public:
+    Game(const int rows, const int cols);
+    void set(const int row, const int col, const int x);
+    std::string toString();
+    void update();
+
+ private:
+    struct Cell {
+        int x;
+        int y;
+        int value;
+    };
+    Grid *grid;
+    std::vector<Cell> getNeighbors(const struct Cell cell) const;
+    int updateCell(struct Cell cell);
+};
+
+#endif

@@ -1,0 +1,23 @@
+import numpy as np
+from keras.models import Sequential
+from keras.layers import Dense
+
+X = np.array([[0,0],
+              [0,1],
+              [1,0],
+              [1,1]])
+
+Y = np.array([[0],
+              [1],
+              [1],
+              [0]])
+
+model = Sequential()
+model.add(Dense(4, input_dim=2, activation='sigmoid'))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(optimizer='rmsprop',
+              loss='mse',
+              metrics=['mae'])
+for i in xrange(60000):
+    model.fit(X, Y, epochs=1, verbose=i%10000==0)
+print(np.round(model.predict(X)))

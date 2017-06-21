@@ -1,0 +1,9 @@
+#include <iostream>
+#include "grid.h"
+
+int main(void) {
+    Grid *g = new Grid(100, 100);
+    g->setAll(5);
+
+    return 0;
+}

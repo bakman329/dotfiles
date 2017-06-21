@@ -1,0 +1,11 @@
+done = False
+n = 0
+while not done:
+    for i in xrange(2, 21):
+        if n % i != 0:
+            break
+        if i == 20:
+            print(n)
+            done = True
+    n += 10
+    print(n)

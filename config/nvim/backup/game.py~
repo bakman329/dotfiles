@@ -1,0 +1,45 @@
+import math
+import sys
+import pygame
+# import tensorflow
+
+class Game:
+    # clock = pygame.time.Clock()
+
+    white = (255, 255, 255)
+    black = (0, 0, 0)
+    red = (255, 0, 0)
+    green = (0, 255, 0)
+    blue = (0, 0, 255)
+
+    def __init__(self):
+        self.done = False
+        pygame.display.init()
+        size = [700, 500]
+        self.screen = pygame.display.set_mode(size)
+
+    def event_loop(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or self.keys[pygame.K_ESCAPE]:
+                self.done = True
+                break
+
+    def main_loop(self):
+        while not self.done:
+            self.keys = pygame.key.get_pressed()
+            self.screen.fill(self.black)
+            self.event_loop()
+            pygame.draw.rect(self.screen, self.white, (100, 100, 50, 50))
+            pygame.display.flip()
+            # self.clock.tick(60)
+        pygame.display.quit()
+        sys.exit()
+
+def main():
+    game = Game()
+    game.main_loop()
+
+    return 0
+
+if __name__ == "__main__":
+    main()

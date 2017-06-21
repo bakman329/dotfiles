@@ -1,0 +1,82 @@
+# Basic color matrix controller
+# Meant for Raspberry Pi Sense HAT, but is a general API
+import numpy as np
+
+class Matrix:
+    def __init__(self, shape, colors, mode=0):
+        self.__modes = [self.init_diag, self.init_horizontal, self.init_vertical]
+        self.mode = mode
+        self.matrix = self.init_empty(shape)
+        self.colors = colors
+        self.__modes[self.mode]()
+
+    def n_rows(self):
+        return self.matrix.shape[0]
+
+    def n_columns(self):
+        return self.matrix.shape[1]
+
+    def cycle_modes(self):
+        self.mode = (self.mode + 1) % len(self.__modes)
+        self.__modes[self.mode]()
+
+    # Takes a number and returns the appropriate color
+    # def num_to_color(n):
+    #     # return colors.items()[(n if n >= 0 else 0) % len[colors]][1]
+    #     return colors[n]
+
+    # Takes a matrix and returns its color representation
+    def to_colors(self):
+        # return [[num_to_color(matrix[i][j]) for i in range(len(matrix))] for j in range(len(matrix[0]))]
+        return [[self.colors[self.matrix[i][j]] for i in range(len(self.matrix))] for j in range(len(self.matrix[0]))]
+
+    # Returns the nth diagonal of the matrix, starting with (0,0), etc.
+    # Indexed starting at one, not zero
+    def nth_diag(self, n):
+        if n < len(self.matrix) + 1:
+            return [(a, b) for (a, b) in zip(range(n), reversed(range(n)))]
+        v = (n - len(self.matrix[0] - 1), len(self.matrix[0]) - 1)
+        array = []
+        while v[0] < len(self.matrix) and v[1] > 0:
+            array.append(v)
+            v = (v[0] + 1, v[1] - 1)
+        return array
+
+    # Returns the nth horizontal of the matrix
+    # Indexed starting at one, not zero
+    def nth_horizontal(self, n):
+        return [(a, b) for (a, b) in zip([n - 1]*self.matrix.shape[0], range(self.matrix.shape[0]))]
+
+    # Returns the nth vertical of the matrix
+    # Indexed starting at one, not zero
+    def nth_vertical(self, n):
+        return [(a, b) for (a, b) in zip(range(self.matrix.shape[1]), [n]*self.matrix.shape[1])]
+
+    # Initializes a matrix with a given shape
+    def init_empty(self, shape):
+        return np.zeros(shape, dtype=int)
+
+    # Initializes a matrix with a given shape, filled with a diagonal rainbow
+    def init_diag(self):
+        # for i in range(self.matrix.shape[0] + self.matrix.shape[1] - 1):
+        for i in range(self.matrix.shape[0] + self.matrix.shape[1]):
+            for (y,x) in self.nth_diag(i):
+                self.matrix[x][y] = i % len(self.colors)
+
+    # Initializes a matrix with a given shape, filled with a horizontal rainbow
+    def init_horizontal(self):
+        for i in range(self.matrix.shape[1] + 1):
+            for (y,x) in self.nth_horizontal(i):
+                self.matrix[x][y] = i % len(self.colors)
+
+    # Initializes a matrix with a given shape, filled with a vertical rainbow
+    def init_vertical(self):
+        for i in range(self.matrix.shape[0]):
+            for (y,x) in self.nth_vertical(i):
+                self.matrix[x][y] = i % len(self.colors)
+
+    # Runs one animation cycle by updating all colors
+    def step(self):
+        for a in range(self.matrix.shape[0]):
+            for b in range(self.matrix.shape[1]):
+                self.matrix[a][b] = (self.matrix[a][b] - 1) % len(self.colors)

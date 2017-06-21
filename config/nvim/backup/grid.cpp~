@@ -1,0 +1,44 @@
+#include "grid.h"
+
+int *Grid::getRef(const int row, const int col) {
+    if (row < rows && col < cols) {
+        return &arr[(row*cols)+col];
+    }
+    else {
+        std::cout << "FAILED";
+        return nullptr;
+    }
+}
+
+int Grid::get(const int row, const int col) {
+    return *getRef(row, col);
+}
+
+void Grid::set(const int row, const int col, const int x) {
+    *getRef(row, col) = x;
+}
+
+void Grid::setAll(const int x) {
+    std::for_each(arr.begin(), arr.end(), [x](int &el) {el = x;});
+}
+
+int Grid::get_rows() const {
+    return rows;
+}
+
+int Grid::get_cols() const {
+    return cols;
+}
+
+std::string Grid::toString() {
+    std::string out = "";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            // out += std::to_string(get(i, j));
+            out += (get(i, j)) ? "■" : "□";
+        }
+        out += '\n';
+    }
+
+    return out;
+}

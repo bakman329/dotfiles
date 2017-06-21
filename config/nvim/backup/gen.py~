@@ -1,0 +1,21 @@
+import numpy as np
+from PIL import Image
+
+def to_bytes(n):
+    arr = [bin(int(a)).replace('0b', '') for a in n] # Convert int to raw binary
+    arr = [('0'*(8-len(a)))+a for a in arr] # Pad to byte with leading zeros
+    arr = [list(a) for a in arr] # Convert each binary string to char list
+    arr = np.int32(arr) # Finally, convert to numpy array
+    return arr
+
+# x = (np.round(np.abs(np.linspace(-2*np.pi, 2*np.pi, num=50)))/10)*255
+x = (np.round(np.linspace(-2*np.pi, 2*np.pi, num=50))/10)*255
+# y = to_bytes(np.round(np.sin(x)*100))
+# y = np.array([[int(sum(a) > 2)]*8 for a in y])
+# y = np.array([[int(sum(a) > 2)*255]*50 for a in y])
+# y = np.array([[a] for a in np.round(np.sin(x)*255)])
+y = np.sin(x)*255
+y = np.array([((a + (128 if a < 0 else -128)) if a != 0 else 0) for a in y]) + 128
+y = np.array([[a] for a in y])
+im = Image.fromarray(y, mode='L')
+im.save('test2.png')

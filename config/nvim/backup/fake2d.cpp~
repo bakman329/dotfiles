@@ -1,0 +1,67 @@
+#include <vector>
+#include <stdexcept>
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+/*
+ * Wraps a 1D vector as a 2D of length (w*h)
+ * [a b c
+ *  d e f
+ *  g h i]
+ * Becomes
+ * [a b c d e f g h i]
+ */
+template <class T>
+class Fake2D {
+ public:
+    Fake2D(int rows, int cols);
+    T get(int row, int col);
+    void set(int row, int col, T x);
+    void setAll(T x);
+
+ private:
+    int rows;
+    int cols;
+    std::vector<T> arr;
+    T *getRef(int row, int col);
+};
+
+template <class T>
+Fake2D<T>::Fake2D(int rows, int cols) {
+    this->rows = rows;
+    this->cols = cols;
+    this->arr = std::vector<T>(rows*cols);
+}
+
+template <class T>
+T *Fake2D<T>::getRef(int row, int col) {
+    if (row < rows && col < cols) {
+        return &arr[(row*cols)+col];
+    }
+    else {
+        throw std::range_error("Index out of range: (" + std::to_string(row) + ", " + std::to_string(col) + ")\n");
+    }
+}
+
+template <class T>
+T Fake2D<T>::get(int row, int col) {
+    return *getRef(row, col);
+}
+
+template <class T>
+void Fake2D<T>::set(int row, int col, T x) {
+    *getRef(row, col) = x;
+}
+
+template <class T>
+void Fake2D<T>::setAll(T x) {
+    std::for_each(arr.begin(), arr.end(), [x](T &el) {el = x;});
+}
+
+int main(void) {
+    auto fake = new Fake2D<int>(3, 3);
+    // fake->set(2, 2, 9);
+    fake->setAll(4);
+    std::cout << fake->get(2, 2);
+}

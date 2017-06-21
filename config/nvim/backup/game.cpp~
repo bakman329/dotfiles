@@ -1,0 +1,83 @@
+#include "game.h"
+
+Game::Game(const int rows, const int cols) {
+    grid = new Grid(rows, cols);
+}
+
+void Game::set(const int row, const int col, const int x) {
+    this->grid->set(row, col, x);
+}
+
+std::string Game::toString() {
+    return this->grid->toString();
+}
+
+void Game::update() {
+    Grid *new_grid = new Grid(*grid);
+    for (int i = 0; i < grid->get_rows(); i++) {
+        for (int j = 0; j < grid->get_cols(); j++) {
+            struct Game::Cell cell = {i, j, grid->get(i, j)};
+            new_grid->set(i, j, updateCell(cell));
+            // std::cout << "A(" << cell.x << ", " << cell.y << "): " << updateCell(cell) << '\n';
+            // std::cout << i << ", " << j << "\n";
+        }
+    }
+
+    grid = new_grid;
+}
+
+std::vector<struct Game::Cell> Game::getNeighbors(const struct Game::Cell cell) const {
+    std::vector<struct Game::Cell> neighbors;
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            if (i == 0 && j == 0) {
+                continue;
+            }
+
+            int new_x = cell.x + i;
+            if (new_x >= grid->get_rows()) {
+                new_x = 0;
+            }
+            if (new_x < 0) {
+                new_x = grid->get_rows() - 1;
+            }
+
+            int new_y = cell.y + j;
+            if (new_y >= grid->get_cols()) {
+                new_y = 0;
+            }
+            if (new_y < 0) {
+                new_y = grid->get_cols() - 1;
+            }
+
+            // std::cout << new_x << " ... " << new_y << "\n";
+
+            struct Game::Cell neighbor = {new_x, new_y, grid->get(new_x, new_y)};
+            neighbors.push_back(neighbor);
+        }
+    }
+
+    return neighbors;
+}
+
+int Game::updateCell(struct Game::Cell cell) {
+    const std::vector<struct Game::Cell> neighbors = getNeighbors(cell);
+    int neighbors_on = 0;
+    std::for_each(neighbors.begin(), neighbors.end(), [&neighbors_on](const struct Game::Cell neighbor) {
+        if (neighbor.value) {
+            neighbors_on += 1;
+        }
+    });
+
+    // std::cout << '(' << cell.x << ", " << cell.y << "): " << neighbors_on << '\n';
+
+    if (cell.value == 0 && neighbors_on == 3) {
+        return 1;
+    }
+
+    if (cell.value == 1 && (neighbors_on < 2 || neighbors_on > 3)) {
+        return 0;
+    }
+
+    return cell.value;
+}

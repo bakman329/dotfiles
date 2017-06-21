@@ -1,0 +1,15 @@
+#ifndef MAP_GENERATOR_H
+#define MAP_GENERATOR_H
+
+#include <iostream>
+
+class MapGenerator {
+ public:
+    void add_room(int map[HEIGHT][WIDTH], int x, int y, int w, int h);
+
+ private:
+    int map[HEIGHT][WIDTH];
+    int *midpoint(int x1, int y1, int x2, int y2);
+}
+
+#endif

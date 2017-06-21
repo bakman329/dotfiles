@@ -1,0 +1,106 @@
+import numpy as np
+from string import ascii_lowercase
+
+data_dir = 'data'
+dict_files = {'eng': 'eng.txt',
+              'ger': 'ger.txt'}
+languages = {'eng', 'ger'}
+max_word_len = 15
+input_len = 26*max_word_len
+hidden_sizes = [16, 8, 4]
+alpha = 0.1
+
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
+def sigmoid_out_to_deriv(y):
+    return y*(1-y)
+
+def encode(string):
+    string = string.lower()
+    encoded = np.array([[int(ch1 == ch2) for ch2 in ascii_lowercase] for ch1 in string]).flatten()
+    padded = np.zeros((input_len))
+    padded[:encoded.shape[0]] = encoded
+    padded = padded.reshape((1, input_len))
+    return padded
+
+def load_input(data_dir, files):
+    return [open(data_dir + '/' + f) for f in files]
+
+def forward(x, W, testing=False):
+    value = x
+    layers = [value]
+    for W_n in W:
+        value = sigmoid(np.dot(value, W_n))
+        layers.append(value)
+
+    return (value if testing else layers)
+
+def cross_entropy(y_, y):
+    total = 0
+    for i in range(y_.shape[1]):
+        total += y_[0][i] * np.log(y[0][i])
+    return -total
+
+def train_step(x, W, y):
+    layers = forward(x, W)
+    print('bla' + str(y))
+    print('bla' + str(layers[-1]))
+    for i in range(len(layers)):
+        print('layer ' + str(i) + str(layers[i].shape))# + ': ' + str(layers[i]))
+        try:
+            print('weight ' + str(i) + str(W[i].shape))# + ': ' + str(W[i]))
+        except(IndexError):
+            pass
+    print("last layer" + str(layers[-1]) + str(layers[-1].shape))
+
+    # output_error = cross_entropy(y, layers[-1])
+    output_error = layers[-1] - y
+    print('error: ' + str(output_error))
+    output_delta = output_error*sigmoid_out_to_deriv(layers[-1])
+    print('output_delta=' + str(output_delta))
+    layer_i_delta = [output_delta]
+    # for i in range(2, len(W)):
+    for i in range(1, len(W)):
+        layer_error = layer_i_delta[0].dot(W[-i].T)
+        print('layer ' + str(i) + ' error: ' + str(layer_error) + ' ' + str(layer_error.shape))
+        layer_i_delta.insert(0, layer_error*sigmoid_out_to_deriv(layers[-(i+1)]))
+        print('new thing: ' + str(layer_i_delta[0].shape))
+
+    # W[-1] -= alpha * (layers[-2].T.dot(layer_i_delta[-1]))
+    for i in range(len(layer_i_delta)):
+        print('bla')
+        print(layer_i_delta[i].shape)
+    for i in range(0, len(W)):
+        print(i)
+        # change = alpha * (layers[-(i-1)].T.dot(layer_i_delta[-i]))
+        # print(change.shape)
+        # print(W[-i].shape)
+        # change = alpha * (layers[-i].T.dot(layer_i_delta[i+1]))
+        # print('change=' + str(change) + str(change.shape))
+        # W[-i] -= change
+        change = alpha * (layers[i].T.dot(layer_i_delta[i+1]))
+        print('change=' + str(change) + str(change.shape))
+        W[i] -= 
+
+if __name__ == '__main__':
+    files_to_load = [dict_files[language] for language in languages]
+    files = load_input(data_dir, files_to_load)
+
+    n_classes = len(languages)
+    W = []
+    W.append(2*np.random.random((input_len, hidden_sizes[0])) - 1)
+    W.append(2*np.random.random((hidden_sizes[0], hidden_sizes[1])) - 1)
+    W.append(2*np.random.random((hidden_sizes[1], hidden_sizes[2])) - 1)
+    W.append(2*np.random.random((hidden_sizes[2], n_classes)) - 1)
+    W = np.array(W)
+
+    for i in range(100):
+        files[0].readline()
+    test_word = files[0].readline()
+    print(test_word)
+    test_word = encode(test_word)
+    # print(test_word.shape)
+    # print(test_word.T)
+    # print(test_word.T.shape)
+    train_step(test_word, W, np.array([[1, 0]]))

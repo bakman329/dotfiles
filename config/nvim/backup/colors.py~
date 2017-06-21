@@ -1,0 +1,16 @@
+from collections import OrderedDict
+
+class Colors:
+    colors = OrderedDict([('white', (255, 255, 255)),
+                          ('red', (255, 0, 0)),
+                          ('orange', (255, 127, 0)),
+                          ('yellow', (255, 255, 0)),
+                          ('green', (0, 255, 0)),
+                          ('blue', (0, 0, 255)),
+                          ('indigo', (75, 0, 130)),
+                          ('violet', (148, 0, 211)),
+                          ('black', (0, 0, 0))])
+
+    rainbow = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']
+    bw = ['black', 'white']
+

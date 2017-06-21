@@ -1,0 +1,7 @@
+import time
+import sys
+
+start_time = time.time()
+execfile(sys.argv[1])
+
+print("--- %s seconds ---" % (time.time() - start_time))

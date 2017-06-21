@@ -1,0 +1,6 @@
+import time
+import sys
+
+initial = time.time()
+execfile(sys.argv[1])
+

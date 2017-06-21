@@ -1,0 +1,9 @@
+#include <iostream>
+
+class MapGenerator {
+ public:
+    void add_room(int map[HEIGHT][WIDTH], int x, int y, int w, int h);
+
+ private:
+    int map[HEIGHT][WIDTH];
+}

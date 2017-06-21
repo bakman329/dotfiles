@@ -1,0 +1,71 @@
+import tensorflow as tf
+import numpy as np
+import math
+
+x = tf.placeholder(tf.float32, (None, 225))
+W = tf.Variable(tf.zeros([225, 4]))
+b = tf.Variable(tf.zeros([4]))
+y = tf.nn.sigmoid(tf.matmul(x, W) + b)
+
+loss = tf.placeholder(tf.float32, (1))
+train_step = tf.train.MomentumOptimizer(0.5, 0.1).minimize(loss)
+
+init = tf.global_variables_initializer()
+
+sess = tf.Session()
+
+import pygame
+import sys
+
+window_shape = (15, 15)
+
+pygame.init()
+
+screen = pygame.display.set_mode((window_shape))
+clock = pygame.time.Clock()
+start_ticks = pygame.time.get_ticks()
+font = pygame.font.SysFont("monospace", 21)
+pacman = pygame.image.load("pacman.png")
+pacman = pygame.transform.scale(pacman, (6, 6))
+pacman_rect = pacman.get_rect()
+goal = pygame.Rect(10, 10, 2, 2)
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+            sys.exit()
+
+        # if keys[pygame.K_UP]:
+        #     pacman_rect.y -= 1
+
+        # if keys[pygame.K_DOWN]:
+        #     pacman_rect.y += 1
+
+        # if keys[pygame.K_LEFT]:
+        #     pacman_rect.x -= 1
+
+        # if keys[pygame.K_RIGHT]:
+        #     pacman_rect.x += 1
+
+    pixels = np.array(screen.get_view('3')).reshape(225, 1).T
+    out = sess.run(y, feed_dict={x: pixels})
+    pacman_rect.x = min(max(0, pacman_rect.x), 15-6)
+    pacman_rect.y = min(max(0, pacman_rect.y), 15-6)
+
+    screen.fill((0, 0, 0))
+
+    screen.blit(pacman, pacman_rect)
+    pygame.draw.rect(screen, (255, 255, 0), goal)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+    seconds = (pygame.time.get_ticks()-start_ticks)/1000
+    if seconds % 10 == 0:
+        sess.run(train_step, feed_dict={loss: math.hypot(pacman_rect.x-goal.x, pacman_rect.y-goal.y)})

@@ -1,0 +1,20 @@
+#ifndef MAP_H
+#define MAP_H
+
+#include <iostream>
+#include <vector>
+
+#define WIDTH 16
+#define HEIGHT 16
+
+class Map {
+ public:
+
+ private:
+    int map[HEIGHT][WIDTH];
+    std::vector<int*> rooms;
+    int *midpoint(int x1, int y1, int x2, int y2);
+    void add_room(int x, int y, int w, int h);
+};
+
+#endif

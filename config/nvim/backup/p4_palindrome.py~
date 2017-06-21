@@ -1,0 +1,24 @@
+import sys
+
+def reverse(string):
+    new_string = ""
+    for i in range(len(string)):
+        new_string += string[len(string) - i - 1]
+    return new_string
+
+def is_palindrome(string):
+    return string == reverse(string)
+
+num_digits = int(sys.argv[1]) if len(sys.argv) > 1 else 3
+lower_limit = 10**(num_digits - 1)
+upper_limit = 10**num_digits
+highest = ((0, 0), 0)
+for i in xrange(lower_limit, upper_limit):
+    for j in xrange(lower_limit, upper_limit):
+        k = i * j
+        # print(str(k) + " = " + str(i) + "*" + str(j))
+        if is_palindrome(str(k)) and k > highest[1]:
+            print(str(k) + " = " + str(i) + "*" + str(j))
+            highest = ((i, j), k)
+
+print("Largest palendrome made from the product of two " + str(num_digits) + "-digit numbers: " + str(highest[0][0]) + "*" + str(highest[0][1]) + " = " + str(highest[1]))

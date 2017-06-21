@@ -1,0 +1,59 @@
+#include <iostream>
+
+#define WIDTH 16
+#define HEIGHT 16
+
+void add_room(int map[HEIGHT][WIDTH], int x, int y, int w, int h) {
+    x -= 1;
+    y -= 1;
+    w -= 1;
+    h -= 1;
+    for (int i = 0; i < w; i++) {
+        map[y][x+i] = 1;
+        map[y+h][x+i] = 1;
+    }
+    for (int i = 0; i < h + 1; i++) {
+        map[y+i][x] = 1;
+        map[y+i][x+w] = 1;
+    }
+}
+
+int *midpoint(int x1, int y1, int x2, int y2) {
+    int *tuple = new int[2];
+    tuple[0] = (x1+x2)/2;
+    tuple[1] = (y1+y2)/2;
+    return tuple;
+}
+
+/*
+ * Takes an even-lengthed array of coord tuples
+ * Compares each pair, non-overlaping(i.e. 0 and 1, 2 and 3)
+ * Return the index of the first member of the closest-together pair
+ */
+int closest_pair(int **pairs) {
+
+}
+
+int main(void) {
+    int map[HEIGHT][WIDTH];
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            map[j][i] = 0;
+        }
+    }
+
+    add_room(map, 3, 4, 4, 5);
+    for (int i = 0; i < HEIGHT; i++) {
+        for (int j = 0; j < WIDTH; j++) {
+            if (map[i][j] == 0) {
+                std::cout << '.';
+            }
+            if (map[i][j] == 1) {
+                std::cout << '#';
+            }
+        }
+        std::cout << '\n';
+    }
+
+    return 0;
+}

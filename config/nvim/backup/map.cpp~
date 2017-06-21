@@ -1,0 +1,37 @@
+#include "map.h"
+
+int *Map::midpoint(int x1, int y1, int x2, int y2) {
+    int *tuple = new int[2];
+    tuple[0] = (x1+x2)/2;
+    tuple[1] = (y1+y2)/2;
+    return tuple;
+}
+
+void Map::add_room(int x, int y, int w, int h) {
+    x -= 1;
+    y -= 1;
+    w -= 1;
+    h -= 1;
+
+    for (int i = 0; i < w; i++) {
+        map[y][x+i] = 1;
+        map[y+h][x+i] = 1;
+    }
+    for (int i = 0; i < h + 1; i++) {
+        map[y+i][x] = 1;
+        map[y+i][x+w] = 1;
+    }
+
+    int *room = new int[4];
+    room[0] = x;
+    room[1] = y;
+    room[2] = w;
+    room[3] = h;
+    rooms.push_back(room);
+}
+
+void Map::add_hallway(int id_a, int id_b) {
+    int *a = rooms[id_a];
+    int *b = rooms[id_b];
+    int *mid_a = midpoint(a[0], a[1], a[2], a[3]);
+}

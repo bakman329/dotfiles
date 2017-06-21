@@ -1,0 +1,36 @@
+/*
+ * https://www.codechef.com/problems/QSTRING
+ */
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main(void) {
+    std::string str;
+    std::string n_query;
+    std::vector<std::string> queries;
+
+    std::getline(std::cin, str);
+    std::getline(std::cin, n_query);
+    for (int i = 0; i < atoi(n_query.c_str()); i++) {
+        std::string temp;
+        std::getline(std::cin, temp);
+        queries.push_back(temp);
+    }
+
+    for (auto query : queries) {
+        std::string instr = query.substr(0, query.find(' '));
+        std::string params = query.substr(query.find(' ') + 1);
+        int p1 = atoi(params.substr(0, params.find(' ')));
+        int p2 = atoi(params.substr(params.find(' ') + 1))
+        if (instr == "Select") {
+            // (p1, p2) = (k1, k2)
+        }
+        else if (instr == "Rank") {
+            // (p1, p2) = (l, r)
+            std::string sub = str.substr(p1 - 1, p2 - 1);
+            int size = str.size();
+        }
+    }
+}

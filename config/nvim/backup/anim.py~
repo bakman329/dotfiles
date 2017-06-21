@@ -1,0 +1,31 @@
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+import matplotlib.animation
+import numpy as np
+
+def sig(x, deriv=False):
+    y = 1/1+np.exp(-x)
+    if deriv:
+        return y*(1-y)
+    return y
+
+def init_animation():
+    global line1
+    global line2
+    line1, = ax.plot(x, np.zeros_like(x))
+    line2, = ax.plot(x, np.zeros_like(x))
+    ax.set_xlim(-8, 8)
+    ax.set_ylim(0, 1)
+
+def animate(i):
+    line1.set_ydata(sig(x))
+    line2.set_ydata(sig(i, deriv=True))
+    return tuple((line1, line2))
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
+x = np.linspace(-8, 8, 200)
+
+ani = matplotlib.animation.FuncAnimation(fig, animate, init_func=init_animation, frames=50)
+ani.save('/media/sf_debian_shared/anim.gif', fps=30)

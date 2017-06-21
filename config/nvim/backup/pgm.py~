@@ -1,0 +1,18 @@
+class PGM:
+    def __init__(self, in_filename, out_filename):
+        self.in_file = open(in_filename, 'r')
+        params = f.readline().split(' ')
+        params.pop(0)
+        for i in range(params[1]):
+            for j in range(params[0]):
+                self.image[i][j] = int(in_file.readline())
+        print(image)
+        print("ff")
+
+        self.out_file = open(out_filename, 'w')
+
+        in_file.close()
+        out_file.close()
+
+def main():
+    PGM("~/Pictures/earth-R.pgm", "")

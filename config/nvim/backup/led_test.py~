@@ -1,0 +1,61 @@
+# Pygame test of the color matrix controller
+from led import Matrix
+from led.colors import Colors
+import pygame
+import sys
+
+matrix_shape = (8, 8)
+window_shape = (920, 680)
+
+pygame.init()
+
+screen = pygame.display.set_mode((window_shape))
+clock = pygame.time.Clock()
+font = pygame.font.SysFont("monospace", 21)
+debug_label = font.render("Debug", 1, (255,255,0))
+
+matrix = Matrix(matrix_shape, Colors.rainbow)
+debug = False
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                pygame.quit()
+                sys.exit()
+
+            if event.key == pygame.K_TAB:
+                debug = not debug
+
+            if event.key == pygame.K_SPACE:
+                if debug:
+                    matrix.step()
+                else:
+                    debug = True
+
+            if event.key == pygame.K_RETURN:
+                matrix.cycle_modes()
+
+            if event.key == pygame.K_1:
+                matrix = Matrix(matrix_shape, Colors.rainbow, matrix.mode)
+
+            if event.key == pygame.K_2:
+                matrix = Matrix(matrix_shape, Colors.bw, matrix.mode)
+
+    screen.fill((0, 0, 0))
+
+    color_matrix = matrix.to_colors()
+    for a in range(matrix.n_rows()):
+        for b in range(matrix.n_columns()):
+            pygame.draw.rect(screen, Colors.colors[(color_matrix[b][a])], (a*55, b*55, 55, 55))
+
+    if debug:
+        screen.blit(debug_label, (matrix.n_rows()*80+50, 80))
+    else:
+        matrix.step()
+        clock.tick(5)
+
+    pygame.display.update()

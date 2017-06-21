@@ -1,0 +1,17 @@
+from sklearn import datasets
+from sklearn.decomposition import PCA
+from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.pyplot as plt
+
+iris = datasets.load_iris()
+pca = PCA(n_components=3)
+reduced = pca.fit_transform(iris.data)
+# pca.fit(iris.data)
+# reduced = pca.transform(iris.data)
+
+# plt.scatter([reduced[:,0][0:50],reduced[:,0][50:100],reduced[:,0][100:150]], [reduced[:,1][0:50],reduced[:,1][50:100],reduced[:,1][100:150]], color=['red', 'green', 'blue'])
+fig = plt.figure(1)
+ax = Axes3D(fig)
+# ax.scatter(reduced[:,0], reduced[:,1], reduced[:,2])
+ax.scatter([reduced[:,0][0:50],reduced[:,0][50:100],reduced[:,0][100:150]], [reduced[:,1][0:50],reduced[:,1][50:100],reduced[:,1][100:150]], [reduced[:,2][0:50],reduced[:,2][50:100],reduced[:,2][100:150]], color=['red', 'green', 'blue'])
+plt.show()

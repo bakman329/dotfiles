@@ -1,0 +1,53 @@
+#include <iostream>
+#include <sstream>
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <random>
+#include <functional>
+#include "game.h"
+
+#define ROWS 10
+#define COLS 10
+#define STEPS 100
+
+int main(void) {
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    // Game *game = new Game(ROWS, COLS);
+    Game *game = new Game(w.ws_row, w.ws_col);
+    // game->set(1, 1, 1);
+    // game->set(2, 2, 1);
+    // game->set(3, 0, 1);
+    // game->set(3, 1, 1);
+    // game->set(3, 2, 1);
+    std::default_random_engine generator;
+    std::uniform_int_distribution<int> distribution(0,1);
+    auto rand = std::bind(distribution, generator);
+    for (int i = 0; i < w.ws_row; i++) {
+        for (int j = 0; j < w.ws_col; j++) {
+            game->set(i, j, rand());
+        }
+    }
+
+    // std::vector<std::istringstream> streams;
+    for (int i = 0; i < STEPS; i++) {
+        std::string str = game->toString();
+        str.pop_back();
+        std::cout << str; // << '\n';
+        // streams.push_back(std::istringstream(game->toString()));
+        game->update();
+        usleep(250000);
+    }
+
+    // std::string line;
+    // for (int i = 0; i < COLS; i++) {
+    //     for (int j = 0; j < streams.size(); j++) {
+    //         std::getline(streams[j], line, '\n');
+    //         std::cout << line << ' ';
+    //     }
+    //     std::cout << '\n';
+    // }
+
+    return 0;
+}

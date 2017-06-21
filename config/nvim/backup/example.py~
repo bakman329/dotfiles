@@ -1,0 +1,86 @@
+from itertools import product
+import numpy
+
+def sigmoid(x):
+    return 1 / (1 + numpy.exp(-x))
+
+def d_sigmoid(y):
+    return y * (1 - y)
+
+class NeuralNetwork(object):
+    def __init__(self, layer_sizes, alpha=0.7, seed=None):
+        self.alpha = alpha
+        state = numpy.random.RandomState(seed)
+        self.weights = [state.uniform(-0.5, 0.5, size)
+                        for size in zip(layer_sizes[:-1], layer_sizes[1:])]
+
+    def _feed_forward(self, x):
+        yield x
+        for w in self.weights:
+            x = sigmoid(numpy.dot(x, w))
+            yield x
+
+    def _deltas(self, layers, output):
+        delta = d_sigmoid(layers[-1]) * (output - layers[-1])
+        for layer, w in zip(layers[-2::-1], self.weights[::-1]):
+            yield delta
+            delta = d_sigmoid(layer) * numpy.dot(delta, w.T)
+
+    def _learn(self, layers, output):
+        deltas = reversed(list(self._deltas(layers, output)))
+        return [w + self.alpha * numpy.outer(layer, delta)
+                for w, layer, delta in zip(self.weights, layers, deltas)]
+
+    def train(self, training_data, rounds=5000):
+        for _, (input, output) in product(range(rounds), training_data):
+            layers = self._feed_forward(numpy.array(input))
+            self.weights = self._learn(list(layers), numpy.array(output))
+
+    def predict(self, input):
+        for layer in self._feed_forward(input):
+            pass
+        return layer
+
+if __name__=='__main__':
+    nn = NeuralNetwork([1, 25, 25, 1])
+    X = numpy.arange(100)
+    Y = numpy.sin(X)
+    data = [([x],[y]) for (x,y) in zip(X, Y)]
+    # # no. 0
+    # t0 = [ 0,1,1,1,0,\
+    #        0,1,0,1,0,\
+    #        0,1,0,1,0,\
+    #        0,1,0,1,0,\
+    #        0,1,1,1,0 ]
+    # # no. 1
+    # t1 = [ 0,1,1,0,0,\
+    #        0,0,1,0,0,\
+    #        0,0,1,0,0,\
+    #        0,0,1,0,0,\
+    #        1,1,1,1,1 ]
+    # # no. 2
+    # t2 = [ 0,1,1,1,0,\
+    #        0,0,0,1,0,\
+    #        0,1,1,1,0,\
+    #        0,1,0,0,0,\
+    #        0,1,1,1,0 ]
+    # # no. 3
+    # t3 = [ 0,1,1,1,0,\
+    #        0,0,0,1,0,\
+    #        0,1,1,1,0,\
+    #        0,0,0,1,0,\
+    #        0,1,1,1,0 ]
+    # # no. 4
+    # t4 = [ 0,1,0,1,0,\
+    #        0,1,0,1,0,\
+    #        0,1,1,1,0,\
+    #        0,0,0,1,0,\
+    #        0,0,0,1,0 ]
+    # T = [(t0, [1,0,0,0,0]), (t1, [0,1,0,0,0]), (t2, [0,0,1,0,0]), (t3, [0,0,0,1,0]), (t4, [0,0,0,0,1])]
+    # nn.train(T, rounds=20000)
+    # nums = [t0, t1, t2, t3, t4]
+    # for i in range(5):
+    #     print(str(i) + ': ' + str(numpy.round(nn.predict(nums[i]))))
+    nn.train(data, rounds=20000)
+    print(nn.predict(10))
+    print(nn.predict(numpy.pi*2))

@@ -1,0 +1,120 @@
+#include <stdio.h>
+
+#define MEM_SIZE 16
+
+#define CONSTRAIN(x) (x) % 16
+
+typedef void (*instruction)(void);
+
+int memory[MEM_SIZE];
+
+int pc;
+int is;
+int r0;
+int r1;
+
+void add () {
+   pc = CONSTRAIN (pc + 1);
+   r0 = CONSTRAIN (r0 + r1);
+}
+
+void sub () {
+   pc = CONSTRAIN (pc + 1);
+   r0 = CONSTRAIN (r0 - r1);
+}
+
+void incR0 () {
+   pc = CONSTRAIN (pc + 1);
+   r0 = CONSTRAIN (r0 + 1);
+}
+
+void incR1 () {
+   pc = CONSTRAIN (pc + 1);
+   r1 = CONSTRAIN (r1 + 1);
+}
+
+void decR0 () {
+   pc = CONSTRAIN (pc + 1);
+   r0 = CONSTRAIN (r0 - 1);
+}
+
+void decR1 () {
+   pc = CONSTRAIN (pc + 1);
+   r1 = CONSTRAIN (r1 + 1);
+}
+
+void ding () {
+   pc = CONSTRAIN (pc + 1);
+   printf("DING!\n");
+}
+
+void out () {
+   printf("%d\n", CONSTRAIN (memory[pc + 1]));
+   pc = CONSTRAIN (pc + 2);
+}
+
+void loadR0 () {
+   // r0 = memory[memory[CONSTRAIN (pc + 1)]];
+   r0 = memory[CONSTRAIN (pc + 1)];
+   pc = CONSTRAIN (pc + 2);
+}
+
+void loadR1 () {
+   r1 = memory[memory[CONSTRAIN (pc + 1)]];
+   pc = CONSTRAIN (pc + 2);
+}
+
+void storeR0 () {
+   memory[memory[CONSTRAIN (pc + 1)]] = r0;
+   pc = CONSTRAIN (pc + 2);
+}
+
+void storeR1 () {
+   memory[memory[CONSTRAIN (pc + 1)]] = r1;
+   pc = CONSTRAIN (pc + 2);
+}
+
+void jmp () {
+   pc = memory[CONSTRAIN (pc + 1)];
+}
+
+void jmpR0 () {
+   if (r0 == 0) {
+      jmp();
+   } else {
+      pc = CONSTRAIN (pc + 1);
+   }
+}
+
+void jmpNotR0 () {
+   if (r0 != 0) {
+      jmp();
+   } else {
+      pc = CONSTRAIN (pc + 1);
+   }
+}
+
+instruction instructions[16] = {add, sub, incR0, incR1, decR0, decR1, ding, out, loadR0, loadR1, storeR0, storeR1, jmp, jmpR0, jmpNotR0};
+
+int main (int argc, char ** argv) {
+
+   int i;
+	for (i=0;i<argc - 1;i++) {
+      memory[i] = CONSTRAIN(atoi(argv[i + 1]));
+   }
+   for (;i<=MEM_SIZE;i++) {
+      memory[i] = 0;
+   }
+
+   pc = is = r0 = r1 = 0;
+   
+   while (1) {
+      is = memory[pc];
+      if (is == 0) {
+         break;
+      }
+      instructions[is - 1]();
+   }
+   
+	return 0;
+}

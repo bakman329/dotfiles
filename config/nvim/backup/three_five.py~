@@ -1,0 +1,8 @@
+n_input = input("Enter a number: ")
+n = range(n_input)
+ans = [n[i] for i in n if n[i] % 3 == 0 || n[i] % 5 == 0]
+sum = 0
+for i in ans:
+    sum += i
+
+print("Sum of multiples of 3 and 5 under {}: {}".format(n_input, sum))
