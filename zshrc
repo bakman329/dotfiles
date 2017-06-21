@@ -69,5 +69,3 @@ alias vim='nvim'
 
 # feh --bg-fill ~/Pictures/octocat-primed.jpg
 source ~/.bin/name.sh && name
-
-. /home/henry/torch/install/bin/torch-activate

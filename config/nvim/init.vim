@@ -66,6 +66,7 @@ call plug#begin('~/.config/nvim')
      Plug 'tpope/vim-fugitive'
      Plug 'nanotech/jellybeans.vim'
      Plug 'Shougo/neocomplete.vim'
+     Plug 'Valloric/YouCompleteMe'
      " Plug 'powerline/powerline'
      " Plug 'bling/vim-airline'
      " Plug 'Shougo/neocomplete'

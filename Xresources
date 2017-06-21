@@ -1,35 +1,53 @@
-URxvt*font: xft:Source\ Code\ Pro\ Medium:pixelsize=11:antialias=true:hinting=true, \
-            xft:FreeSerif:style=Regular, \
-            xft:unifont:style=Medium:antialias=false
+! General Config
+URxvt*scrollBar: false
+URxvt*iso14755: False
 
-urxvt.scrollBar: false
-urxvt.visualbell: false
+! Perl Plugin Setup
+URxvt*perl-ext-common: default,clipboard,keyboard-select
 
-! Jellybeans Terminal Colours
-urxvt.background: #151515
-urxvt.foreground: #ffffff
-! black
-! urxvt.color0: #888888
-urxvt.color0: #000000
-urxvt.color8: #525252
-! red
-urxvt.color1: #cf6a4c
-urxvt.color9: #ff9d80
-! green
-urxvt.color2: #99ad6a
-urxvt.color10: #c3e6ad
-! yellow
-urxvt.color3: #fad07a
-urxvt.color11: #ffefbf
-! blue
-urxvt.color4: #8197bf
-urxvt.color12: #accaff
-! magenta
-urxvt.color5: #8787af
-urxvt.color13: #c4c4ff
-! cyan
-urxvt.color6: #8fbfdc
-urxvt.color14: #80bfaf
-! white
-urxvt.color7: #888888
-urxvt.color15: #e8e8d
+! Keybinds
+URxvt*keysym*Shift-Control-V: perl:clipboard:paste
+URxvt*keysym*Shift-Control-F: perl:keyboard-select:activate
+URxvt*keysym*Shift-Control-S: perl:keyboard-select:search
+
+! Fonts and Colors
+! URxvt*font: -uw-ttyp0-medium-r-normal--11-100-75-75-c-60-iso10646-1, xft:Source Code Pro:size=9:antialias=true
+! URxvt*boldFont: -uw-ttyp0-medium-r-normal--11-100-75-75-c-60-iso10646-1
+! URxvt*font:xft:Source Code Pro:size=9:antialias=true
+URxvt*font: -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1, xft:Source Code Pro:size=9:antialias=true
+! URxvt*font: -xos4-terminesspowerline-bold-r-normal--14-140-72-72-c-80-iso10646-1, xft:Source Code Pro:size=9:antialias=true
+
+! URxvt.transparent:   true
+! URxvt.tintColor:     white
+! URxvt.shading:       15
+
+! Jellybeans Color Scheme
+URxvt*background:        #262729
+URxvt*foreground:        #dddddd
+URxvt*cursorColor:       #8c817e
+URxvt*colorBD:           #585653
+URxvt*colorUL:           #6c615e
+! Black
+*color0:  #1a1a1a
+*color8:  #404040
+! Red
+*color1:  #d75f5f
+*color9:  #EA8484
+! Green
+*color2:  #87af5f
+*color10: #C7F09F
+! Yellow
+*color3:  #ffaf5f
+*color11: #FFCC9A
+! Blue
+*color4:  #87afd7
+*color12: #a5caef
+! Magenta
+*color5:  #8787af
+*color13: #A6A6DE
+! Cyan
+*color6:  #5f8787
+*color14: #69b2b2
+! White
+*color7:  #808080
+*color15: #d7d7d7
