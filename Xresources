@@ -1,6 +1,6 @@
 ! General Config
 URxvt*scrollBar: false
-URxvt*iso14755: False
+URxvt*iso14755: false
 
 ! Perl Plugin Setup
 URxvt*perl-ext-common: default,clipboard,keyboard-select
@@ -11,11 +11,8 @@ URxvt*keysym*Shift-Control-F: perl:keyboard-select:activate
 URxvt*keysym*Shift-Control-S: perl:keyboard-select:search
 
 ! Fonts and Colors
-! URxvt*font: -uw-ttyp0-medium-r-normal--11-100-75-75-c-60-iso10646-1, xft:Source Code Pro:size=9:antialias=true
-! URxvt*boldFont: -uw-ttyp0-medium-r-normal--11-100-75-75-c-60-iso10646-1
-! URxvt*font:xft:Source Code Pro:size=9:antialias=true
-URxvt*font: -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1, xft:Source Code Pro:size=9:antialias=true
-! URxvt*font: -xos4-terminesspowerline-bold-r-normal--14-140-72-72-c-80-iso10646-1, xft:Source Code Pro:size=9:antialias=true
+URxvt*font: xft:xos4 Terminess Powerline:style=Regular:size=9, xft:Source Code Pro:size=9:antialias=true, xft:Unifont:style=Regular:size=9:antialias=false, xft:FreeSerif:style=Medium:size=9:antialias=true
+URxvt*boldFont:
 
 ! URxvt.transparent:   true
 ! URxvt.tintColor:     white
